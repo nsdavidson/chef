@@ -223,7 +223,7 @@ F
 
     attr_reader :updated
 
-    attr_reader :resource_name
+    attr_accessor :resource_name
     attr_reader :not_if_args
     attr_reader :only_if_args
 
@@ -825,6 +825,7 @@ F
       rescue ArgumentError
       end
       resource = resource_for_platform(short_name, platform, version)
+      resource.resource_name = short_name
       resource
     end
 
