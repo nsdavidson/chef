@@ -101,7 +101,12 @@ CONFIG
           chef_version_string = if knife_config[:bootstrap_version]
             knife_config[:bootstrap_version]
           else
-            Chef::VERSION.split(".").first
+            v = Chef::VERSION.split(".").first
+            # As of now there are no shipped versions of Chef Client 12
+            # So if we are bootstrapping a node using a pre-release version
+            # of Chef Client on the workstations (out of box experience in
+            # Chef DK) we need to bootstrap the node with version 11
+            v == "12" ? "11" : v
           end
 
           installer_version_string = ["-v", chef_version_string]
