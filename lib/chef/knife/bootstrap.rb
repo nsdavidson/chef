@@ -174,6 +174,23 @@ class Chef
         :description => "Add options to curl when install chef-client",
         :proc        => Proc.new { |co| Chef::Config[:knife][:bootstrap_curl_options] = co }
 
+      option :ssl_verify_mode,
+        :long        => "--ssl-verify-mode [none|all]",
+        :description => "Whether or not to verify the SSL cert for all HTTPS requests.",
+        :proc        => Proc.new { |verify_mode|
+          if verify_mode == "all"
+            mode = :verify_peer
+          elsif verify_mode == "none"
+            mode = :verify_none
+          end
+          Chef::Config[:knife][:ssl_verify_mode] = mode
+        }
+
+      option :verify_api_cert,
+        :long        => "--[no-]verify-api-cert",
+        :description => "Verify the SSL cert for HTTPS requests to the Chef server API.",
+        :boolean     => true
+
       def find_template(template=nil)
         # Are we bootstrapping using an already shipped template?
         if config[:template_file]
