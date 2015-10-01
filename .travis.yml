@@ -11,6 +11,7 @@ branches:
   - master
   - 10-stable
   - 11-stable
+  - ci-testing
 
 # do not run expensive spec tests on PRs, only on branches
 script: "
